@@ -52,14 +52,14 @@ class CheckstylePlugin(BaseFormatter):
 
         element = ET.SubElement(self.checkstyle_element, 'file', name=filename)
         for error in self.errors:
-            message = error.code + ' ' + error.text
+            message = error.text
             prefix = error.code.strip()[0]
             ET.SubElement(element, 'error', {
                 'severity': CHECKSTYLE_SERVERITY.get(prefix, 'info'),
                 'line': str(error.line_number),
                 'column': str(error.column_number),
                 'message': message,
-                'source': CHECKSTYLE_SOURCE.get(prefix, 'undefined code'),
+                'source': CHECKSTYLE_SOURCE.get(prefix, 'undefined code') + '.' + error.code,
             }
             )
 
